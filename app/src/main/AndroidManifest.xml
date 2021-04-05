@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sidev.app.course.dicoding.bab3_modul3.githubuser3">
 
+    <permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"
+        android:protectionLevel="normal"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <queries>
         <package android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3fav" />
     </queries>
+
 
     <application
         android:allowBackup="true"
@@ -13,20 +16,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DicodingGithubUser2" >
+        android:theme="@style/Theme.DicodingGithubUser2">
         <!-- Lists activities of appCommon module -->
-        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.SplashAct">
+        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.SplashAct"
+            android:theme="@style/NoActBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserListAct" />
-        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" >
-            <intent-filter>
-                <action android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.DETAIL"/>
-            </intent-filter>
-        </activity>
+        <!-- <activity android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3fav.act.UserFavListAct" /> -->
+        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" />
+        <provider
+            android:authorities="sidev.app.course.dicoding.bab3_modul3.githubuser3.provider.UserFavProvider"
+            android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.provider.UserFavProvider"
+            android:exported="true"
+            android:enabled="true"
+            android:readPermission="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV" />
     </application>
 
 </manifest>

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sidev.app.course.dicoding.bab3_modul3.githubuser3fav">
 
+    <uses-permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo_app"
@@ -9,13 +12,15 @@
         android:roundIcon="@mipmap/logo_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingGithubUser3" >
-        <activity android:name=".act.SplashAct">
+        <activity android:name=".act.SplashAct"
+            android:theme="@style/NoActBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".act.UserFavListAct" />
+        <activity android:name=".act.UserFavListAct" android:exported="true" />
+        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" />
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ class UserFavListAct: AppCompatActivity() {
         commitFrag(
             UserListFrag().apply {
                 arguments = Bundle().apply {
-                    putInt(Const.KEY_TYPE, Const.UserListType.FAVOURITE.ordinal)
+                    putInt(Const.KEY_SOURCE, Const.UserListType.FAVOURITE.ordinal)
                 }
             },
             fragContainerId = _R.id.fragment, forceReplace = false

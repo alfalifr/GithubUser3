@@ -21,16 +21,17 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel.UserListViewMod
 import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 import sidev.lib.exception.IllegalArgExc
+import java.lang.IllegalArgumentException
 
 class UserListFrag: Fragment(), TextWatcher {
     private var args: UserListFragArgs?= null
     private lateinit var binding: PageListBinding
     private lateinit var adp: UserAdp
     private val vm: UserListViewModel by lazy {
-        UserListViewModel.getInstance(this, requireContext(), args?.owner == null, isOnline)
+        UserListViewModel.getInstance(this, requireContext(), args?.owner == null, dataSource)
     }
     private var runningSearchJob: Job?= null
-    private var isOnline= true
+    private var dataSource= Const.DataSource.ONLINE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +63,14 @@ class UserListFrag: Fragment(), TextWatcher {
             inputLayout.hint = getString(R.string.search_uname)
         }
 
-        isOnline = args?.type != Const.UserListType.FAVOURITE.ordinal
-        loge("isOnline= $isOnline")
+        dataSource = try { Const.DataSource.values()[args?.source ?: 0] }
+        catch (e: ArrayIndexOutOfBoundsException) {
+            throw IllegalArgumentException("UserListFragArgs.source must have value in range 0-2", e)
+        } catch (e: Exception) {
+            Const.DataSource.ONLINE
+        }
+
+        loge("dataSource= $dataSource")
 
         vm.dataList.observe(this) {
             adp.dataList= it
@@ -160,20 +167,18 @@ class UserListFrag: Fragment(), TextWatcher {
 
     override fun afterTextChanged(s: Editable?) {
         cancelSearchJob()
-        loge("afterTextChanged isOnline= $isOnline s= $s")
+        loge("afterTextChanged isOnline= $dataSource s= $s")
         runningSearchJob = GlobalScope.launch {
             delay(700)
             s?.toString()?.also {
-                if(it.isNotBlank()){
-                    if(isOnline)
-                        vm.searchUser(it)
-                    else
-                        vm.queryUser(it)
-                } else {
-                    if(isOnline)
-                        vm.downloadInitDataList()
-                    else
-                        vm.queryUserList()
+                if(it.isNotBlank()) when(dataSource){
+                    Const.DataSource.ONLINE -> vm.searchUser(it)
+                    Const.DataSource.INTERNAL_DB -> vm.queryUser(it)
+                    Const.DataSource.EXTERNAL_DB -> vm.askUser(it)
+                } else when(dataSource){
+                    Const.DataSource.ONLINE -> vm.downloadInitDataList()
+                    Const.DataSource.INTERNAL_DB -> vm.queryUserList()
+                    Const.DataSource.EXTERNAL_DB -> vm.askUserList()
                 }
             }
             runningSearchJob= null

@@ -2,6 +2,7 @@ package sidev.app.course.dicoding.bab3_modul3.appcommon.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.database.Cursor
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import com.android.volley.NetworkResponse
@@ -21,6 +22,7 @@ import org.json.JSONObject
 import sidev.app.course.dicoding.bab3_modul3.appcommon.R
 import sidev.lib.android.std.tool.util._NetworkUtil
 import sidev.lib.android.std.tool.util._ViewUtil
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.structure.data.value.varOf
 
 object Util {
@@ -43,6 +45,7 @@ object Util {
         onError: ((code: Int, e: VolleyError) -> Unit)?= null,
         onResponse: (code: Int, content: String) -> Unit,
     ) : Job = GlobalScope.launch(Dispatchers.IO) {
+        loge("Util.httpGet() url= $url")
         if(_NetworkUtil.isNetworkActive(c)){
             Volley.newRequestQueue(c).add(
                 createVolleyRequest(
@@ -86,4 +89,23 @@ object Util {
 
     fun getSharedPref(ctx: Context, mode: Int = Context.MODE_PRIVATE): SharedPreferences =
         ctx.getSharedPreferences(Const.SHARED_PREF_NAME, mode)
+
+    fun buildQueryString(rawString: String, args: Array<out String>?): String {
+        if(args == null)
+            return rawString.also {
+                loge("Util.buildQueryString() raw returned= $it")
+            }
+        var res= rawString
+        var i= -1
+        var argI= 0
+        while(++i < res.length){
+            if(res[i] == '?'){
+                val arg= args!![argI++]
+                res= res.substring(0, i) +arg +res.substring(i+1)
+                i += arg.length -1
+            }
+        }
+        loge("Util.buildQueryString() res= $res")
+        return res
+    }
 }

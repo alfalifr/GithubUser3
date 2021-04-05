@@ -1,6 +1,7 @@
 package sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel
 
 import android.content.Context
+import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.android.volley.TimeoutError
 import com.android.volley.VolleyError
@@ -24,7 +25,8 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.R as _R
 class UserListViewModel(
     private val ctx: Context,
     private val defaultLoadData: Boolean = true,
-    private val isOnline: Boolean = false,
+    //private val isOnline: Boolean = false,
+    private val dataSource: Const.DataSource = Const.DataSource.ONLINE,
 ): ViewModel() {
 
     companion object {
@@ -32,13 +34,13 @@ class UserListViewModel(
             owner: ViewModelStoreOwner,
             ctx: Context,
             defaultLoadData: Boolean = true,
-            isOnline: Boolean = true,
+            dataSource: Const.DataSource = Const.DataSource.ONLINE,
         ): UserListViewModel = ViewModelProvider(
             owner,
             object: ViewModelProvider.Factory {
                 @Suppress(SuppressLiteral.UNCHECKED_CAST)
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-                    UserListViewModel(ctx, defaultLoadData, isOnline) as T
+                    UserListViewModel(ctx, defaultLoadData, dataSource) as T
             }
         ).get(UserListViewModel::class.java)
     }
@@ -49,10 +51,11 @@ class UserListViewModel(
             val liveData= _dataList
             // Init value
             if(liveData.value == null && defaultLoadData){
-                if(isOnline)
-                    downloadInitDataList()
-                else
-                    queryUserList()
+                when(dataSource){
+                    Const.DataSource.ONLINE -> downloadInitDataList()
+                    Const.DataSource.INTERNAL_DB -> queryUserList()
+                    Const.DataSource.EXTERNAL_DB -> askUserList()
+                }
             }
             return _dataList
         }
@@ -127,12 +130,40 @@ class UserListViewModel(
             _dataList.postValue(userFavDao.getAll().asMutableList())
         }
     }
-
     fun queryUser(uname: String){
         cancelJob()
         doOnPreAsyncTask()
         runningJob = GlobalScope.launch {
             _dataList.postValue(userFavDao.searchUname(uname).asMutableList())
+        }
+    }
+
+    fun askUserList(){
+        cancelJob()
+        doOnPreAsyncTask()
+        runningJob = GlobalScope.launch {
+            ctx.contentResolver.query(
+                Const.UserFavUri.ALL.completeUri(), null, null, null, null
+            )?.also {
+                _dataList.postValue(
+                    User.fromCursor(it).asMutableList()
+                )
+                it.close()
+            }
+        }
+    }
+    fun askUser(uname: String){
+        cancelJob()
+        doOnPreAsyncTask()
+        runningJob = GlobalScope.launch {
+            ctx.contentResolver.query(
+                Const.UserFavUri.LIKE_UNAME.completeUri(uname), null, null, null, null
+            )?.also {
+                _dataList.postValue(
+                    User.fromCursor(it).asMutableList()
+                )
+                it.close()
+            }
         }
     }
 

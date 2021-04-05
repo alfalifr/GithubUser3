@@ -15,6 +15,10 @@
             android:name="type"
             app:argType="integer"
             android:defaultValue="-1"/>
+        <argument
+            android:name="source"
+            app:argType="integer"
+            android:defaultValue="0"/>
     </fragment>
 
     <fragment
@@ -27,6 +31,10 @@
             android:defaultValue="null"/>
         <argument
             android:name="type"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+        <argument
+            android:name="source"
             app:argType="integer"
             android:defaultValue="0"/>
     </fragment>
