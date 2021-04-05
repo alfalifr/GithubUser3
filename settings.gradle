@@ -1,0 +1,4 @@
+include ':appCommon'
+include ':appFav'
+include ':app'
+rootProject.name = "Dicoding - GithubUser3"
