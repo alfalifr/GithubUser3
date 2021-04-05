@@ -36,10 +36,10 @@ class UserDetailAct: AppCompatActivity() {
         setContentView(binding.root)
         setTitle(R.string.user_detail)
 
-        initFavBtn()
-
         // It's obvious to use !! since `data` should not be null.
         data= intent.getParcelableExtra(Const.DATA)!!
+
+        initFavBtn()
 
         binding.apply {
             val icPadding= _ViewUtil.dpToPx(7f, this@UserDetailAct).toInt()
@@ -117,14 +117,13 @@ class UserDetailAct: AppCompatActivity() {
                     if(it != null)
                         imageResource = if(it) R.drawable.ic_heart else R.drawable.ic_heart_hollow
                 }
+                vm.isFav(data.username)
                 setOnClickListener {
                     val isFav = vm.favData.value!! // !! 'cause we assume that the value is already loaded from db 'cuase it shouldn't take long.
-                    imageResource = if(isFav){
+                    if(isFav){
                         vm.deleteFav(data.username)
-                        R.drawable.ic_heart_hollow
                     } else {
                         vm.insertFav(data)
-                        R.drawable.ic_heart
                     }
                 }
             }

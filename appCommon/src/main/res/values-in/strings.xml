@@ -12,7 +12,7 @@
     <string name="user_list">Daftar Pengguna</string>
     <string name="user_detail">Rincian Pengguna</string>
     <string name="toast_check_connection">Mohon cek koneksi internet anda</string>
-    <string name="toast_bad_connection">Koneksi internet anda buruk</string>
+    <string name="toast_connection_timeout">Waktu koneksi habis</string>
     <string name="toast_fav_app_not_installed">App "GithubUser3 Fav" belum diinstall</string>
     <string name="set_language">Atur Bahasa</string>
     <string name="fav_page">Halaman Favorit</string>

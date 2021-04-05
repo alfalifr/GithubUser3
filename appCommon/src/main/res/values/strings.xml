@@ -12,7 +12,7 @@
     <string name="user_list">User List</string>
     <string name="user_detail">User Detail</string>
     <string name="toast_check_connection">Please check internet your connection</string>
-    <string name="toast_bad_connection">Your internet connection is bad</string>
+    <string name="toast_connection_timeout">Connection time out</string>
     <string name="toast_fav_app_not_installed">App "GithubUser3 Fav" is not installed</string>
     <string name="set_language">Set Language</string>
     <string name="fav_page">Favorite Page</string>

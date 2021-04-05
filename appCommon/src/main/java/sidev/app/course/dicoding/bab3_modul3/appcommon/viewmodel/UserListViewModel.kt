@@ -142,7 +142,7 @@ class UserListViewModel(
         } else {
             loge("NETWORK ERROR!!!", e)
             if(e is TimeoutError){
-                ctx.toast(ctx.getString(_R.string.toast_bad_connection))
+                ctx.toast(ctx.getString(_R.string.toast_connection_timeout))
             } else {
                 throw IllegalStateException("Something wrong happened is connection", e)
             }
