@@ -148,7 +148,7 @@ class UserListFrag: Fragment(), TextWatcher {
         loge("onViewStateRestored")
         super.onViewStateRestored(savedInstanceState)
         showNoData(false)
-        showSearchBar(args?.owner == null)
+        showSearchBar(args?.owner == null && dataSource != Const.DataSource.EXTERNAL_DB)
     }
 
     /*
