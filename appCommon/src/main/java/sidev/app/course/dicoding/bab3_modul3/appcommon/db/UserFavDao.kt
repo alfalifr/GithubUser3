@@ -2,11 +2,9 @@ package sidev.app.course.dicoding.bab3_modul3.appcommon.db
 
 import android.content.ContentValues
 import android.database.Cursor
-import android.net.Uri
 import androidx.room.*
 import sidev.app.course.dicoding.bab3_modul3.appcommon.model.User
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Util
-import sidev.lib.android.std.tool.util.`fun`.loge
 import java.lang.IllegalStateException
 
 @Dao
@@ -61,8 +59,6 @@ interface UserFavDao {
         val _2Nulls = !isColsNull && isWhereNull && isOrderNull
                 || !isWhereNull && isColsNull && isOrderNull
                 || !isOrderNull && isColsNull && isWhereNull
-
-        loge("query() isColsNull= $isColsNull isWhereNull= $isWhereNull isOrderNull= $isOrderNull _2Nulls= $_2Nulls")
 
         return when {
             isColsNull && isWhereNull && isOrderNull -> getAllCursor()

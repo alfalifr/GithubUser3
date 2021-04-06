@@ -22,7 +22,6 @@ import org.json.JSONObject
 import sidev.app.course.dicoding.bab3_modul3.appcommon.R
 import sidev.lib.android.std.tool.util._NetworkUtil
 import sidev.lib.android.std.tool.util._ViewUtil
-import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.structure.data.value.varOf
 
 object Util {
@@ -45,7 +44,6 @@ object Util {
         onError: ((code: Int, e: VolleyError) -> Unit)?= null,
         onResponse: (code: Int, content: String) -> Unit,
     ) : Job = GlobalScope.launch(Dispatchers.IO) {
-        loge("Util.httpGet() url= $url")
         if(_NetworkUtil.isNetworkActive(c)){
             Volley.newRequestQueue(c).add(
                 createVolleyRequest(
@@ -92,9 +90,7 @@ object Util {
 
     fun buildQueryString(rawString: String, args: Array<out String>?): String {
         if(args == null)
-            return rawString.also {
-                loge("Util.buildQueryString() raw returned= $it")
-            }
+            return rawString
         var res= rawString
         var i= -1
         var argI= 0
@@ -105,7 +101,6 @@ object Util {
                 i += arg.length -1
             }
         }
-        loge("Util.buildQueryString() res= $res")
         return res
     }
 }

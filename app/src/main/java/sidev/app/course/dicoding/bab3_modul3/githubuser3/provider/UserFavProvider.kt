@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import org.jetbrains.anko.runOnUiThread
 import sidev.app.course.dicoding.bab3_modul3.appcommon.db.UserFavDao
 import sidev.app.course.dicoding.bab3_modul3.appcommon.db.UserFavDb
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
@@ -126,7 +125,7 @@ class UserFavProvider: ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?,
         sortOrder: String?
-    ): Cursor = when(val code = matcher.match(uri).also{ context!!.runOnUiThread { loge("code= $it selection= $selection uri= $uri") } }){
+    ): Cursor = when(val code = matcher.match(uri)){
         Const.UserFavUri.ALL.ordinal +1 -> dao.getAllCursor()
         Const.UserFavUri.UNAME.ordinal +1 -> dao.query(
             projection,

@@ -1,7 +1,7 @@
 package sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
-import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.android.volley.TimeoutError
 import com.android.volley.VolleyError
@@ -9,7 +9,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.runOnUiThread
-import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
 import sidev.app.course.dicoding.bab3_modul3.appcommon.db.UserFavDao
@@ -19,6 +18,7 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Util
 import sidev.lib.`val`.SuppressLiteral
 import sidev.lib.android.std.tool.util.`fun`.loge
+import sidev.lib.android.std.tool.util.`fun`.toast
 import sidev.lib.collection.asMutableList
 import sidev.app.course.dicoding.bab3_modul3.appcommon.R as _R
 
@@ -138,32 +138,43 @@ class UserListViewModel(
         }
     }
 
+    @SuppressLint("Recycle")
     fun askUserList(){
         cancelJob()
         doOnPreAsyncTask()
         runningJob = GlobalScope.launch {
-            ctx.contentResolver.query(
+            val client = ctx.contentResolver.acquireContentProviderClient(Const.UserFavUri.ALL.completeUri())
+            client?.query(
                 Const.UserFavUri.ALL.completeUri(), null, null, null, null
             )?.also {
                 _dataList.postValue(
                     User.fromCursor(it).asMutableList()
                 )
                 it.close()
+            } ?: run {
+                ctx.runOnUiThread { ctx.toast(ctx.getString(_R.string.cant_access_user_data)) }
             }
+            client?.close()
         }
     }
+
+    @SuppressLint("Recycle")
     fun askUser(uname: String){
         cancelJob()
         doOnPreAsyncTask()
         runningJob = GlobalScope.launch {
-            ctx.contentResolver.query(
+            val client = ctx.contentResolver.acquireContentProviderClient(Const.UserFavUri.LIKE_UNAME.completeUri(uname))
+            client?.query(
                 Const.UserFavUri.LIKE_UNAME.completeUri(uname), null, null, null, null
             )?.also {
                 _dataList.postValue(
                     User.fromCursor(it).asMutableList()
                 )
                 it.close()
+            } ?: run {
+                ctx.runOnUiThread { ctx.toast(ctx.getString(_R.string.cant_access_user_data)) }
             }
+            client?.close()
         }
     }
 

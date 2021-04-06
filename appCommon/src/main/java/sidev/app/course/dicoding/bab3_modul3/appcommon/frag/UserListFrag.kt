@@ -18,7 +18,6 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.adp.UserAdp
 import sidev.app.course.dicoding.bab3_modul3.appcommon.databinding.PageListBinding
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel.UserListViewModel
-import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 import sidev.lib.exception.IllegalArgExc
 import java.lang.IllegalArgumentException
@@ -53,7 +52,6 @@ class UserListFrag: Fragment(), TextWatcher {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        loge("onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             rv.apply {
@@ -69,8 +67,6 @@ class UserListFrag: Fragment(), TextWatcher {
         } catch (e: Exception) {
             Const.DataSource.ONLINE
         }
-
-        loge("dataSource= $dataSource")
 
         vm.dataList.observe(this) {
             adp.dataList= it
@@ -145,7 +141,6 @@ class UserListFrag: Fragment(), TextWatcher {
      * a previous saved state, this is the state.
      */
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        loge("onViewStateRestored")
         super.onViewStateRestored(savedInstanceState)
         showNoData(false)
         showSearchBar(args?.owner == null && dataSource != Const.DataSource.EXTERNAL_DB)
@@ -167,7 +162,6 @@ class UserListFrag: Fragment(), TextWatcher {
 
     override fun afterTextChanged(s: Editable?) {
         cancelSearchJob()
-        loge("afterTextChanged isOnline= $dataSource s= $s")
         runningSearchJob = GlobalScope.launch {
             delay(700)
             s?.toString()?.also {

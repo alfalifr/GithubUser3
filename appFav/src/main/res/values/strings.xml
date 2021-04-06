@@ -15,6 +15,10 @@
     <string name="toast_check_connection">Please check internet your connection</string>
     <string name="set_language">Set Language</string>
     <string name="fav_page">Favorite Page</string>
+    <string name="no_fav">No Favourites</string>
+    <string name="fav_user">Favourite Users</string>
+    <string name="refreshing">Refreshing</string>
+    <string name="loading_fav">Loading favourites…</string>
 
     <plurals name="repositories">
         <item quantity="one">%d repository</item>

@@ -48,6 +48,7 @@ object Const {
 
 
     const val DATA = "data"
+    const val DATA_INDEX = "index"
     private const val URL_USER_SEARCH = "https://api.github.com/search/users?q="
     const val URL_USER_LIST = "https://api.github.com/users"
     const val KEY_OWNER = "owner"

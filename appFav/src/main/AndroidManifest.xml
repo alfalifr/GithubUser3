@@ -21,6 +21,17 @@
         </activity>
         <activity android:name=".act.UserFavListAct" android:exported="true" />
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" />
+        <service android:name=".service.WidgetFavService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <receiver android:name=".widget.FavStackWidget"
+            android:exported="true"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_fav" />
+        </receiver>
     </application>
 
 </manifest>

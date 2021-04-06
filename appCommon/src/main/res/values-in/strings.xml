@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_desc">"Daftar semua pengguna Github"</string>
+    <string name="app_desc">"Daftar Semua Pengguna Github"</string>
     <string name="template_text">Ini teks</string>
     <string name="template_title">Ini judul</string>
     <string name="search_uname">Cari Username</string>
@@ -16,6 +16,7 @@
     <string name="toast_fav_app_not_installed">App "GithubUser3 Fav" belum diinstall</string>
     <string name="set_language">Atur Bahasa</string>
     <string name="fav_page">Halaman Favorit</string>
+    <string name="cant_access_user_data">Tidak bisa mengakses data user</string>
 
     <plurals name="repositories">
         <item quantity="other">%d repositori</item>

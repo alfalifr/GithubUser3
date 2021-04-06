@@ -4,6 +4,9 @@
 
     <permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"
         android:protectionLevel="normal"/>
+    <permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.WRITE_USER_FAV"
+        android:protectionLevel="dangerous"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <queries>
         <package android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3fav" />
@@ -33,7 +36,9 @@
             android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.provider.UserFavProvider"
             android:exported="true"
             android:enabled="true"
-            android:readPermission="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV" />
+            android:grantUriPermissions="true"
+            android:readPermission="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"
+            android:writePermission="sidev.app.course.dicoding.bab3_modul3.githubuser3.WRITE_USER_FAV" />
     </application>
 
 </manifest>

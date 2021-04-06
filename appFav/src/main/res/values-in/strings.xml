@@ -15,6 +15,10 @@
     <string name="toast_check_connection">Mohon cek koneksi internet anda</string>
     <string name="set_language">Atur Bahasa</string>
     <string name="fav_page">Halaman Favorit</string>
+    <string name="no_fav">Tidak ada favorit</string>
+    <string name="fav_user">Pengguna Favorit</string>
+    <string name="refreshing">Me-refresh</string>
+    <string name="loading_fav">Memuat favorit…</string>
 
     <plurals name="repositories">
         <item quantity="other">%d repositori</item>

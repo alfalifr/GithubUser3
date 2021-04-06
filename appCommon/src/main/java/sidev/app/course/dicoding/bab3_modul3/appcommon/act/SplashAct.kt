@@ -8,7 +8,6 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.R
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Util
 import sidev.lib.android.std.tool.util._ThreadUtil
-import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 
 class SplashAct: AppCompatActivity() {
