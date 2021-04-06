@@ -25,7 +25,6 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.R as _R
 class UserListViewModel(
     private val ctx: Context,
     private val defaultLoadData: Boolean = true,
-    //private val isOnline: Boolean = false,
     private val dataSource: Const.DataSource = Const.DataSource.ONLINE,
 ): ViewModel() {
 
@@ -143,7 +142,9 @@ class UserListViewModel(
         cancelJob()
         doOnPreAsyncTask()
         runningJob = GlobalScope.launch {
-            val client = ctx.contentResolver.acquireContentProviderClient(Const.UserFavUri.ALL.completeUri())
+            val client = ctx.contentResolver.acquireContentProviderClient(
+                Const.UserFavUri.ALL.completeUri()
+            )
             client?.query(
                 Const.UserFavUri.ALL.completeUri(), null, null, null, null
             )?.also {
@@ -163,7 +164,9 @@ class UserListViewModel(
         cancelJob()
         doOnPreAsyncTask()
         runningJob = GlobalScope.launch {
-            val client = ctx.contentResolver.acquireContentProviderClient(Const.UserFavUri.LIKE_UNAME.completeUri(uname))
+            val client = ctx.contentResolver.acquireContentProviderClient(
+                Const.UserFavUri.LIKE_UNAME.completeUri(uname)
+            )
             client?.query(
                 Const.UserFavUri.LIKE_UNAME.completeUri(uname), null, null, null, null
             )?.also {

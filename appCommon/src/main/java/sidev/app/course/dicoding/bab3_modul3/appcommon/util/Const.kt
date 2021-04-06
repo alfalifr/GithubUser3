@@ -8,7 +8,6 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.model.User
 
 object Const {
     enum class UserListType(val titleRes: Int) {
-        //ALL, // For all main user list. Not used
         FOLLOWER(R.string.follower),
         FOLLOWING(R.string.following),
         FAVOURITE(R.string.favourite),
@@ -48,7 +47,6 @@ object Const {
 
 
     const val DATA = "data"
-    const val DATA_INDEX = "index"
     private const val URL_USER_SEARCH = "https://api.github.com/search/users?q="
     const val URL_USER_LIST = "https://api.github.com/users"
     const val KEY_OWNER = "owner"

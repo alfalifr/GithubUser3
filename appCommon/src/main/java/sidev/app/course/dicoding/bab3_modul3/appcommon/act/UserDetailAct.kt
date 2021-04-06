@@ -125,7 +125,7 @@ class UserDetailAct: AppCompatActivity() {
                         imageResource = if(it) R.drawable.ic_heart else R.drawable.ic_heart_hollow
                         val pkg = Const.PKG_APP_FAV
                         val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-                        //intent.component = ComponentName(pkg, "$pkg.widget.FavStackWidget")
+                        intent.component = ComponentName(pkg, "$pkg.widget.FavStackWidget")
                         sendBroadcast(intent)
                     }
                 }

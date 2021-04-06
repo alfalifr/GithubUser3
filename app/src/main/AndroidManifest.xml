@@ -29,7 +29,6 @@
             </intent-filter>
         </activity>
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserListAct" />
-        <!-- <activity android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3fav.act.UserFavListAct" /> -->
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" />
         <provider
             android:authorities="sidev.app.course.dicoding.bab3_modul3.githubuser3.provider.UserFavProvider"
