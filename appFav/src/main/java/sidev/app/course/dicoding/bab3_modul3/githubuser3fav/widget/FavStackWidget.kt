@@ -11,6 +11,7 @@ import org.jetbrains.anko.toast
 import sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.R
+import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.act.UserFavListAct
 import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.service.WidgetFavService
 import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.util.ConstFav
 import sidev.lib.android.std.tool.util.`fun`.startAct
@@ -56,16 +57,15 @@ class FavStackWidget: AppWidgetProvider() {
         itemIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         val itemPendingIntent = PendingIntent.getBroadcast(ctx, 0, itemIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val refreshIntent = Intent(ctx, FavStackWidget::class.java)
-        refreshIntent.action = ConstFav.ACTION_REFRESH
-        refreshIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-        val refreshPendingIntent = PendingIntent.getBroadcast(ctx, widgetId, refreshIntent, 0)
+        val actionIntent = Intent(ctx, FavStackWidget::class.java)
+        actionIntent.action = ConstFav.ACTION_HOME
+        val actionPendingIntent = PendingIntent.getBroadcast(ctx, widgetId, actionIntent, 0)
 
         val views= RemoteViews(ctx.packageName, R.layout.widget_fav)
         views.setEmptyView(R.id.sv, R.id.tv_no_data)
         views.setRemoteAdapter(R.id.sv, serviceIntent)
         views.setPendingIntentTemplate(R.id.sv, itemPendingIntent)
-        views.setOnClickPendingIntent(R.id.iv_refresh, refreshPendingIntent)
+        views.setOnClickPendingIntent(R.id.iv_home, actionPendingIntent)
 
         manager.updateAppWidget(widgetId, views)
     }
@@ -88,10 +88,13 @@ class FavStackWidget: AppWidgetProvider() {
                     it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
             }
-            ConstFav.ACTION_REFRESH -> {
-                val id= intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0)
-                context.toast(context.getString(R.string.refreshing))
-                updateAppWidget(context, AppWidgetManager.getInstance(context), id)
+            ConstFav.ACTION_HOME -> {
+                context.toast(context.getString(R.string.opening_home))
+                context.startAct<UserFavListAct> {
+                    it.addFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    )
+                }
             }
         }
     }

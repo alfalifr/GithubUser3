@@ -15,8 +15,14 @@
     <string name="toast_connection_timeout">Connection time out</string>
     <string name="toast_fav_app_not_installed">App "GithubUser3 Fav" is not installed</string>
     <string name="set_language">Set Language</string>
+    <string name="set_other">Other Settings</string>
     <string name="fav_page">Favorite Page</string>
     <string name="cant_access_user_data">Can\'t access user data</string>
+    <string name="hello">Hello!</string>
+    <string name="notif_desc">Let\'s find your favourite Github user here!</string>
+    <string name="notif">Notification</string>
+    <string name="set_notif_item">Set notification at 09.00 AM</string>
+    <string name="setting">Settings</string>
 
     <plurals name="repositories">
         <item quantity="one">%d repository</item>

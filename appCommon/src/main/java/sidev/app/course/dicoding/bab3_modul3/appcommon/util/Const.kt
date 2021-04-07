@@ -62,6 +62,7 @@ object Const {
     const val KEY_LOCATION = "location"
     const val KEY_ITEMS = "items"
     const val KEY_FAV_APP_INSTALLED = "fav_app_ok"
+    const val KEY_FIRST_RUN = "first_run"
     const val SHARED_PREF_NAME = "_default_"
 
     const val ACTION_DIRECT = "sidev.direct"
@@ -76,8 +77,8 @@ object Const {
 
     const val PROVIDER_AUTH = "$PKG_APP_MAIN.provider.UserFavProvider"
 
-    const val ACTION_FAV_LIST = "$PKG_APP_FAV.LIST"
     const val ACTION_USER_DETAIL = "$PKG_APP_COMMON.DETAIL"
+    const val ACTION_ALARM_NOTIF = "$PKG_APP_MAIN.NOTIF"
 
     fun getUserListUrl(count: Int)= "$URL_USER_LIST?per_page=$count"
     fun getUserUrl(username: String)= "$URL_USER_LIST/$username"

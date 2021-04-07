@@ -28,6 +28,7 @@
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <category android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3fav.WIDGET" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_fav" />

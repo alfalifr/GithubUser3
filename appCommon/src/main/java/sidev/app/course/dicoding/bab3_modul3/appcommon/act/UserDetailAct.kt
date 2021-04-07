@@ -1,9 +1,5 @@
 package sidev.app.course.dicoding.bab3_modul3.appcommon.act
 
-import android.app.PendingIntent
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
-import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -123,10 +119,6 @@ class UserDetailAct: AppCompatActivity() {
                 vm.favData.observe(this@UserDetailAct) {
                     if(it != null){
                         imageResource = if(it) R.drawable.ic_heart else R.drawable.ic_heart_hollow
-                        val pkg = Const.PKG_APP_FAV
-                        val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-                        intent.component = ComponentName(pkg, "$pkg.widget.FavStackWidget")
-                        sendBroadcast(intent)
                     }
                 }
                 vm.isFav(data.username)

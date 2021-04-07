@@ -2,16 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sidev.app.course.dicoding.bab3_modul3.githubuser3">
 
-    <permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"
-        android:protectionLevel="normal"/>
-    <permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.WRITE_USER_FAV"
-        android:protectionLevel="dangerous"/>
+    <permission
+        android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.WRITE_USER_FAV"
+        android:protectionLevel="dangerous" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <queries>
         <package android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3fav" />
     </queries>
-
 
     <application
         android:allowBackup="true"
@@ -21,20 +25,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingGithubUser2">
         <!-- Lists activities of appCommon module -->
-        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.SplashAct"
+        <activity
+            android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.SplashAct"
             android:theme="@style/NoActBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserListAct" />
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" />
-        <provider
-            android:authorities="sidev.app.course.dicoding.bab3_modul3.githubuser3.provider.UserFavProvider"
-            android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.provider.UserFavProvider"
+        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.SettingsAct" />
+
+        <receiver android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.receiver.AlarmNotifReceiver"
             android:exported="true"
+            android:enabled="true" />
+        <provider
+            android:name=".provider.UserFavProvider"
+            android:authorities="sidev.app.course.dicoding.bab3_modul3.githubuser3.provider.UserFavProvider"
             android:enabled="true"
+            android:exported="true"
             android:grantUriPermissions="true"
             android:readPermission="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"
             android:writePermission="sidev.app.course.dicoding.bab3_modul3.githubuser3.WRITE_USER_FAV" />

@@ -1,19 +1,17 @@
 package sidev.app.course.dicoding.bab3_modul3.appcommon.act
 
-import android.app.Activity
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import sidev.app.course.dicoding.bab3_modul3.appcommon.R
 import sidev.app.course.dicoding.bab3_modul3.appcommon.frag.UserListFrag
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Util
 import sidev.lib.android.std.tool.util.`fun`.commitFrag
+import sidev.lib.android.std.tool.util.`fun`.startAct
 import java.lang.IllegalStateException
 
 class UserListAct: AppCompatActivity() {
@@ -39,6 +37,9 @@ class UserListAct: AppCompatActivity() {
                     flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                 }
             )
+            R.id.set_other -> {
+                startAct<SettingsAct>()
+            }
             else -> throw IllegalStateException("There is an illegal itemId (${item.itemId}) in menu")
         }
         return super.onOptionsItemSelected(item)

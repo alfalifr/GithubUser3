@@ -2,6 +2,7 @@ package sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import androidx.lifecycle.*
 import com.android.volley.TimeoutError
 import com.android.volley.VolleyError
@@ -155,7 +156,10 @@ class UserListViewModel(
             } ?: run {
                 ctx.runOnUiThread { ctx.toast(ctx.getString(_R.string.cant_access_user_data)) }
             }
-            client?.close()
+            if(Build.VERSION.SDK_INT < 24)
+                client?.release()
+            else
+                client?.close()
         }
     }
 
@@ -177,7 +181,10 @@ class UserListViewModel(
             } ?: run {
                 ctx.runOnUiThread { ctx.toast(ctx.getString(_R.string.cant_access_user_data)) }
             }
-            client?.close()
+            if(Build.VERSION.SDK_INT < 24)
+                client?.release()
+            else
+                client?.close()
         }
     }
 

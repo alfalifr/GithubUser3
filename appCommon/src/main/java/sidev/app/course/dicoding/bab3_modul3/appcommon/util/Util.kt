@@ -1,10 +1,16 @@
 package sidev.app.course.dicoding.bab3_modul3.appcommon.util
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.SharedPreferences
-import android.database.Cursor
+import android.os.Build
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.core.app.NotificationCompat
+import androidx.core.content.getSystemService
 import com.android.volley.NetworkResponse
 import com.android.volley.Request
 import com.android.volley.Response
@@ -20,9 +26,11 @@ import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import sidev.app.course.dicoding.bab3_modul3.appcommon.R
+import sidev.lib.`val`.SuppressLiteral
 import sidev.lib.android.std.tool.util._NetworkUtil
 import sidev.lib.android.std.tool.util._ViewUtil
 import sidev.lib.structure.data.value.varOf
+import java.util.*
 
 object Util {
     object Json {
@@ -96,11 +104,69 @@ object Util {
         var argI= 0
         while(++i < res.length){
             if(res[i] == '?'){
-                val arg= args!![argI++]
+                val arg= args[argI++]
                 res= res.substring(0, i) +arg +res.substring(i+1)
                 i += arg.length -1
             }
         }
         return res
+    }
+
+
+    fun setAlarm(
+        c: Context, pi: PendingIntent,
+        hour: Int = 1, minute: Int = 0, second: Int = 0,
+        repeat: Boolean = true
+    ){
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.HOUR_OF_DAY, hour)
+        cal.set(Calendar.MINUTE, minute)
+        cal.set(Calendar.SECOND, second)
+        val manager = c.getSystemService<AlarmManager>()!!
+
+        if(repeat)
+            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.timeInMillis, AlarmManager.INTERVAL_DAY, pi)
+        else
+            manager.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pi)
+    }
+
+    fun stopAlarm(c: Context, pi: PendingIntent){
+        pi.cancel()
+        c.getSystemService<AlarmManager>()!!.cancel(pi)
+    }
+
+    @Suppress(SuppressLiteral.NAME_SHADOWING)
+    fun showNotif(
+        c: Context,
+        smIcon: Int = R.drawable.app_logo_mini,
+        title: String = c.getString(R.string.template_title),
+        desc: String = c.getString(R.string.template_text),
+        channelId: String = "CHANNEL_ID",
+        channelName: String = "CHANNEL_NAME",
+        channelDesc: String = "CHANNEL_DESC",
+        notifId: Int = 1,
+        pendingIntent: PendingIntent?= null,
+    ){
+        val manager = c.getSystemService<NotificationManager>()!!
+
+        val builder = NotificationCompat.Builder(c, channelId)
+            .setSmallIcon(smIcon)
+            .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
+            .setContentTitle(title)
+            .setContentText(desc)
+            .setAutoCancel(true)
+
+        if(pendingIntent != null)
+            builder.setContentIntent(pendingIntent)
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+            channel.description = channelDesc
+
+            manager.createNotificationChannel(channel)
+        }
+
+        val notif = builder.build()
+        manager.notify(notifId, notif)
     }
 }
