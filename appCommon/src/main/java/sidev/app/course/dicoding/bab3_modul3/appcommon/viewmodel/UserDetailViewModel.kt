@@ -1,5 +1,6 @@
 package sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.*
 import kotlinx.coroutines.GlobalScope
@@ -35,10 +36,6 @@ class UserDetailViewModel(private val ctx: Context): ViewModel() {
         get()= _favData
 
     private var runningJob: Job?= null
-
-    private val userFavDao: UserFavDao by lazy {
-        UserFavDb.getInstance(ctx).dao()
-    }
 
     /**
      * Executed before any async task in `this` runs.
@@ -89,17 +86,31 @@ class UserDetailViewModel(private val ctx: Context): ViewModel() {
         }
     }
 
+    @SuppressLint("Recycle")
     fun isFav(uname: String) = postFavData {
-        userFavDao.isFav(uname)
+        //Use content provider for simpler code for both module
+        ctx.contentResolver.query(Const.UserFavUri.UNAME.completeUri(uname), null, null, null, null)
+            ?.let {
+                val bool= it.moveToFirst()
+                it.close()
+                bool
+            } == true
     }
 
+    @SuppressLint("Recycle")
     fun deleteFav(uname: String) = postFavData {
-        userFavDao.delete(uname)
-        false
+        //Use content provider for simpler code for both module
+        ctx.contentResolver.delete(
+            Const.UserFavUri.UNAME.completeUri(uname), null, null
+        ) != 1
+        // != 1, because the result boolean shows whether user with `uname` is favorite.
+        // In this case, if we successfully deleted user, that user will be NOT favorite.
     }
 
+    @SuppressLint("Recycle")
     fun insertFav(user: User) = postFavData {
-        userFavDao.insert(user)
+        //Use content provider for simpler code for both module
+        ctx.contentResolver.insert(Const.UserFavUri.UNAME.completeUri(user.username), user.toContentValues())
         true
     }
 }

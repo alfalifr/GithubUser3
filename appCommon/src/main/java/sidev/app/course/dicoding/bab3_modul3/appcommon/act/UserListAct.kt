@@ -8,8 +8,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import sidev.app.course.dicoding.bab3_modul3.appcommon.R
 import sidev.app.course.dicoding.bab3_modul3.appcommon.frag.UserListFrag
-import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
-import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Util
 import sidev.lib.android.std.tool.util.`fun`.commitFrag
 import sidev.lib.android.std.tool.util.`fun`.startAct
 import java.lang.IllegalStateException
@@ -23,23 +21,15 @@ class UserListAct: AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val isFavAppInstalled = Util.getSharedPref(this)
-            .getBoolean(Const.KEY_FAV_APP_INSTALLED, false)
-        menuInflater.inflate(if(isFavAppInstalled) R.menu.main_page_fav else R.menu.main_page, menu)
+        menuInflater.inflate(R.menu.main_page_fav, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.set_language -> startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-            R.id.fav_page -> startActivity(
-                packageManager.getLaunchIntentForPackage(Const.PKG_APP_FAV)!!.apply {
-                    flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-                }
-            )
-            R.id.set_other -> {
-                startAct<SettingsAct>()
-            }
+            R.id.fav_page -> startAct<UserFavListAct>()
+            R.id.set_other -> startAct<SettingsAct>()
             else -> throw IllegalStateException("There is an illegal itemId (${item.itemId}) in menu")
         }
         return super.onOptionsItemSelected(item)

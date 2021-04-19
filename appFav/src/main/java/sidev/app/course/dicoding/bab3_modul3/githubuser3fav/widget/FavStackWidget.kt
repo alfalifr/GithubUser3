@@ -9,9 +9,9 @@ import android.widget.RemoteViews
 import androidx.core.net.toUri
 import org.jetbrains.anko.toast
 import sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct
+import sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserFavListAct
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.R
-import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.act.UserFavListAct
 import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.service.WidgetFavService
 import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.util.ConstFav
 import sidev.lib.android.std.tool.util.`fun`.startAct

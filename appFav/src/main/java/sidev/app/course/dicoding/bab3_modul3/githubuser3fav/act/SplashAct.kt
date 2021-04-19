@@ -2,6 +2,7 @@ package sidev.app.course.dicoding.bab3_modul3.githubuser3fav.act
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserFavListAct
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.githubuser3fav.R
 import sidev.lib.android.std.tool.util._ThreadUtil

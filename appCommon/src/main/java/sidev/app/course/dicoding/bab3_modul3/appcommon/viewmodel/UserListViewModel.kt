@@ -54,7 +54,7 @@ class UserListViewModel(
                 when(dataSource){
                     Const.DataSource.ONLINE -> downloadInitDataList()
                     Const.DataSource.INTERNAL_DB -> queryUserList()
-                    Const.DataSource.EXTERNAL_DB -> askUserList()
+                    Const.DataSource.EXTERNAL_DB -> askUserFavList()
                 }
             }
             return _dataList
@@ -139,7 +139,7 @@ class UserListViewModel(
     }
 
     @SuppressLint("Recycle")
-    fun askUserList(){
+    fun askUserFavList(){
         cancelJob()
         doOnPreAsyncTask()
         runningJob = GlobalScope.launch {
@@ -164,7 +164,7 @@ class UserListViewModel(
     }
 
     @SuppressLint("Recycle")
-    fun askUser(uname: String){
+    fun askFavUser(uname: String){
         cancelJob()
         doOnPreAsyncTask()
         runningJob = GlobalScope.launch {

@@ -9,6 +9,7 @@
     <string name="follower">Pengikut</string>
     <string name="following">Mengikuti</string>
     <string name="favourite">Favorit</string>
+    <string name="favourite_list">Daftar Favorit</string>
     <string name="user_list">Daftar Pengguna</string>
     <string name="user_detail">Rincian Pengguna</string>
     <string name="toast_check_connection">Mohon cek koneksi internet anda</string>

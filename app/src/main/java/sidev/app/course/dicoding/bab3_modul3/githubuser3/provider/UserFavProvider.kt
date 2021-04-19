@@ -9,6 +9,7 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.db.UserFavDao
 import sidev.app.course.dicoding.bab3_modul3.appcommon.db.UserFavDb
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.lib.android.std.tool.util.`fun`.loge
+import java.lang.IllegalStateException
 
 class UserFavProvider: ContentProvider() {
 
@@ -125,20 +126,10 @@ class UserFavProvider: ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?,
         sortOrder: String?
-    ): Cursor = when(val code = matcher.match(uri)){
+    ): Cursor = when(val code = matcher.match(uri).also { loge("query() code= $it uri= $uri") }){
         Const.UserFavUri.ALL.ordinal +1 -> dao.getAllCursor()
-        Const.UserFavUri.UNAME.ordinal +1 -> dao.query(
-            projection,
-            "username = '${uri.lastPathSegment!!}'${if(selection == null) "" else " AND $selection"}",
-            selectionArgs,
-            sortOrder
-        )
-        Const.UserFavUri.LIKE_UNAME.ordinal +1 -> dao.query(
-            projection,
-            "username LIKE '%${uri.lastPathSegment!!}%'${if(selection == null) "" else " AND $selection"}",
-            selectionArgs,
-            sortOrder
-        )
+        Const.UserFavUri.UNAME.ordinal +1 -> dao.getCursorByUname(uri.lastPathSegment!!) // It's safe to use !! since the uri matches the pattern.
+        Const.UserFavUri.LIKE_UNAME.ordinal +1 -> dao.searchCursorUname(uri.lastPathSegment!!)
         else -> throw IllegalArgumentException("Dynamic query is not allowed (code= $code, uri= $uri)")
     }
 
@@ -164,6 +155,7 @@ class UserFavProvider: ContentProvider() {
      */
     override fun getType(uri: Uri): String? = null
 
+
     /**
      * Implement this to handle requests to insert a new row. As a courtesy,
      * call
@@ -176,9 +168,12 @@ class UserFavProvider: ContentProvider() {
      * @param values A set of column_name/value pairs to add to the database.
      * @return The URI for the newly inserted item.
      */
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        loge("Can't insert favourite user via 'GithubUser3 Fav' app. Use main app instead.")
-        return null
+    override fun insert(uri: Uri, values: ContentValues?): Uri {
+        return if(values != null && isUriByUname(uri)){
+            dao.insert(values)
+            Const.UserFavUri.UNAME.completeUri(values.getAsString(Const.PROP_USERNAME))
+        } else
+            throw IllegalStateException("Insert with uri= '$uri' isn't supported")
     }
 
     /**
@@ -205,8 +200,13 @@ class UserFavProvider: ContentProvider() {
      * @throws SQLException
      */
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        loge("Can't delete favourite user via 'GithubUser3 Fav' app. Use main app instead.")
-        return 0
+        return if(isUriByUname(uri)){
+            dao.delete(uri.lastPathSegment!!)
+            loge("Delete(), uri= $uri selection= $selection selectionArgs= ${selectionArgs?.joinToString()}")
+            if(selection != null || selectionArgs != null)
+                loge("Delete(), selection ($selection) and selectionArgs (${selectionArgs?.joinToString(prefix = "[", postfix = "]")}) are ignored.")
+            1
+        } else 0
     }
 
     /**
@@ -229,8 +229,11 @@ class UserFavProvider: ContentProvider() {
         values: ContentValues?,
         selection: String?,
         selectionArgs: Array<out String>?
-    ): Int {
-        loge("Can't update favourite user via 'GithubUser3 Fav' app. Use main app instead.")
-        return 0
-    }
+    ): Int =
+        throw IllegalStateException("There is no supported update operation for the content provider")
+
+    /**
+     * Checks whether the [uri] matches the [Const.UserFavUri.UNAME.completeUri] pattern.
+     */
+    private fun isUriByUname(uri: Uri): Boolean = matcher.match(uri) == Const.UserFavUri.UNAME.ordinal +1
 }

@@ -18,6 +18,7 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.adp.UserAdp
 import sidev.app.course.dicoding.bab3_modul3.appcommon.databinding.PageListBinding
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel.UserListViewModel
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 import sidev.lib.exception.IllegalArgExc
 import java.lang.IllegalArgumentException
@@ -34,7 +35,10 @@ class UserListFrag: Fragment(), TextWatcher {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        args = arguments?.let { UserListFragArgs.fromBundle(it) }
+        args = arguments?.let {
+            loge("it.keySet()= ${it.keySet().joinToString()}")
+            UserListFragArgs.fromBundle(it)
+        }
         adp= UserAdp().apply {
             onItemClick {
                 startAct<UserDetailAct>(Const.DATA to it)
@@ -68,7 +72,7 @@ class UserListFrag: Fragment(), TextWatcher {
             Const.DataSource.ONLINE
         }
 
-        vm.dataList.observe(this) {
+        vm.dataList.observe(viewLifecycleOwner) {
             adp.dataList= it
             showNoData(adp.itemCount == 0)
             showLoading(false)
@@ -90,6 +94,19 @@ class UserListFrag: Fragment(), TextWatcher {
                 }
                 binding.rv.isNestedScrollingEnabled = false
             }
+        }
+    }
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This is generally
+     * tied to [Activity.onResume] of the containing
+     * Activity's lifecycle.
+     */
+    override fun onResume() {
+        super.onResume()
+        if(args?.loadOnResume == true){
+            vm.askUserFavList()
         }
     }
 
@@ -168,11 +185,11 @@ class UserListFrag: Fragment(), TextWatcher {
                 if(it.isNotBlank()) when(dataSource){
                     Const.DataSource.ONLINE -> vm.searchUser(it)
                     Const.DataSource.INTERNAL_DB -> vm.queryUser(it)
-                    Const.DataSource.EXTERNAL_DB -> vm.askUser(it)
+                    Const.DataSource.EXTERNAL_DB -> vm.askFavUser(it)
                 } else when(dataSource){
                     Const.DataSource.ONLINE -> vm.downloadInitDataList()
                     Const.DataSource.INTERNAL_DB -> vm.queryUserList()
-                    Const.DataSource.EXTERNAL_DB -> vm.askUserList()
+                    Const.DataSource.EXTERNAL_DB -> vm.askUserFavList()
                 }
             }
             runningSearchJob= null

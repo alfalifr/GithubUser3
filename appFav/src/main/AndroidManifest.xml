@@ -3,7 +3,12 @@
     package="sidev.app.course.dicoding.bab3_modul3.githubuser3fav">
 
     <uses-permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.READ_USER_FAV"/>
+    <uses-permission android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.WRITE_USER_FAV"/>
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <queries>
+        <package android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3" />
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -19,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".act.UserFavListAct" android:exported="true" />
+        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserFavListAct" />
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" />
         <service android:name=".service.WidgetFavService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />

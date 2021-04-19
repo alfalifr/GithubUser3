@@ -7,15 +7,11 @@
         android:protectionLevel="normal" />
     <permission
         android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3.WRITE_USER_FAV"
-        android:protectionLevel="dangerous" />
+        android:protectionLevel="normal" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <queries>
-        <package android:name="sidev.app.course.dicoding.bab3_modul3.githubuser3fav" />
-    </queries>
 
     <application
         android:allowBackup="true"
@@ -35,6 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserListAct" />
+        <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserFavListAct" />
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.UserDetailAct" />
         <activity android:name="sidev.app.course.dicoding.bab3_modul3.appcommon.act.SettingsAct" />
 

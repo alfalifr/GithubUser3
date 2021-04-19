@@ -9,6 +9,7 @@
     <string name="follower">Follower</string>
     <string name="following">Following</string>
     <string name="favourite">Favourite</string>
+    <string name="favourite_list">Favourite List</string>
     <string name="user_list">User List</string>
     <string name="user_detail">User Detail</string>
     <string name="toast_check_connection">Please check internet your connection</string>

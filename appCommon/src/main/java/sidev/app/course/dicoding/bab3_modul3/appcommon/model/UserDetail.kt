@@ -1,6 +1,7 @@
 package sidev.app.course.dicoding.bab3_modul3.appcommon.model
 
 import android.os.Parcelable
+import androidx.room.Entity
 import kotlinx.parcelize.Parcelize
 import sidev.app.course.dicoding.bab3_modul3.appcommon.model.User
 

@@ -19,6 +19,10 @@
             android:name="source"
             app:argType="integer"
             android:defaultValue="0"/>
+        <argument
+            android:name="loadOnResume"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
 
     <fragment
@@ -37,6 +41,10 @@
             android:name="source"
             app:argType="integer"
             android:defaultValue="0"/>
+        <argument
+            android:name="loadOnResume"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
 
 </navigation>

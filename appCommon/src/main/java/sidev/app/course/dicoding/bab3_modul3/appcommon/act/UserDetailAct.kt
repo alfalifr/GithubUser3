@@ -16,6 +16,7 @@ import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Const
 import sidev.app.course.dicoding.bab3_modul3.appcommon.util.Util
 import sidev.app.course.dicoding.bab3_modul3.appcommon.viewmodel.UserDetailViewModel
 import sidev.lib.android.std.tool.util._ViewUtil
+import sidev.lib.android.std.tool.util.`fun`.loge
 
 class UserDetailAct: AppCompatActivity() {
     private lateinit var data: User
@@ -110,29 +111,25 @@ class UserDetailAct: AppCompatActivity() {
     }
 
     private fun initFavBtn(){
-        val isFavAppInstalled = if(intent.action == Const.ACTION_USER_DETAIL) true
-            else Util.getSharedPref(this).getBoolean(Const.KEY_FAV_APP_INSTALLED, false)
-
-        binding.btnFav.visibility = if(isFavAppInstalled) {
-            // init other config of binding.btnFav only if `isFavAppInstalled` for efficiency
-            binding.btnFav.apply {
-                vm.favData.observe(this@UserDetailAct) {
-                    if(it != null){
-                        imageResource = if(it) R.drawable.ic_heart else R.drawable.ic_heart_hollow
-                    }
-                }
-                vm.isFav(data.username)
-                setOnClickListener {
-                    val isFav = vm.favData.value!! // !! 'cause we assume that the value is already loaded from db 'cuase it shouldn't take long.
-                    if(isFav){
-                        vm.deleteFav(data.username)
-                    } else {
-                        vm.insertFav(data)
-                    }
+        // init other config of binding.btnFav only if `isFavAppInstalled` for efficiency
+        binding.btnFav.apply {
+            visibility = View.VISIBLE
+            vm.favData.observe(this@UserDetailAct) {
+                loge("isFav() = $it")
+                if(it != null){
+                    imageResource = if(it) R.drawable.ic_heart else R.drawable.ic_heart_hollow
                 }
             }
-            View.VISIBLE
-        } else View.GONE
+            vm.isFav(data.username)
+            setOnClickListener {
+                val isFav = vm.favData.value!! // !! 'cause we assume that the value is already loaded from db 'cuase it shouldn't take long.
+                if(isFav){
+                    vm.deleteFav(data.username)
+                } else {
+                    vm.insertFav(data)
+                }
+            }
+        }
     }
 
     /**

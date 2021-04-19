@@ -20,6 +20,7 @@ object Const {
             putString(KEY_OWNER, user.username)
             putInt(KEY_TYPE, ordinal)
             putInt(KEY_SOURCE, DataSource.ONLINE.ordinal)
+            putBoolean(DATA_LOAD_ON_RESUME, false)
         }
     }
 
@@ -47,6 +48,7 @@ object Const {
 
 
     const val DATA = "data"
+    const val DATA_LOAD_ON_RESUME = "loadOnResume"
     private const val URL_USER_SEARCH = "https://api.github.com/search/users?q="
     const val URL_USER_LIST = "https://api.github.com/users"
     const val KEY_OWNER = "owner"
@@ -64,6 +66,9 @@ object Const {
     const val KEY_FAV_APP_INSTALLED = "fav_app_ok"
     const val KEY_FIRST_RUN = "first_run"
     const val SHARED_PREF_NAME = "_default_"
+
+    const val PROP_USERNAME = "username"
+    const val PROP_AVATAR = "avatar"
 
     const val ACTION_DIRECT = "sidev.direct"
 

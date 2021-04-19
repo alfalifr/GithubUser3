@@ -113,5 +113,5 @@ class WidgetFavAdp(private val ctx: Context): RemoteViewsService.RemoteViewsFact
      *
      * @return True if the same id always refers to the same object.
      */
-    override fun hasStableIds(): Boolean = true
+    override fun hasStableIds(): Boolean = false
 }
